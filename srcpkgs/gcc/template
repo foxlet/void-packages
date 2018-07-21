@@ -105,6 +105,7 @@ case "$XBPS_TARGET_MACHINE" in
 	mipshf-musl) _triplet="mips-linux-muslhf";;
 	mipsel-musl) _triplet="mipsel-linux-musl";;
 	mipselhf-musl) _triplet="mipsel-linux-muslhf";;
+	ppc) _triplet="powerpc-linux-gnu";;
 esac
 case "$XBPS_TARGET_MACHINE" in
 	*-musl)	 depends+=" musl-devel";;
@@ -176,6 +177,7 @@ do_configure() {
 		armv5*) _args+=" --with-arch=armv5te --with-float=soft";;
 		armv6l*) _args+=" --with-arch=armv6 --with-fpu=vfp --with-float=hard";;
 		armv7l*) _args+=" --with-arch=armv7-a --with-fpu=vfpv3 --with-float=hard";;
+		ppc) _args+=" --with-cpu=powerpc --target=powerpc-linux-gnu";;
 		aarch64*) # use lib not lib64 by default
 			_args+=" --with-arch=armv8-a"
 			sed -i '/m64=/s/lib64/lib/' gcc/config/aarch64/t-aarch64-linux
@@ -243,6 +245,10 @@ do_configure() {
 				rm -rf libmpx
 			fi
 			;;
+	esac
+	case "$XBPS_TARGET_MACHINE" in
+		ppc*) _args+=" --disable-vtable-verify" ;;
+		*) _args+=" --enable-vtable-verify" ;;
 	esac
 
 	case "$XBPS_TARGET_MACHINE" in
