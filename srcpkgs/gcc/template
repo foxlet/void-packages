@@ -73,6 +73,7 @@ case "$XBPS_TARGET_MACHINE" in
 	mipshf-musl) _triplet="mips-linux-muslhf";;
 	mipsel-musl) _triplet="mipsel-linux-musl";;
 	mipselhf-musl) _triplet="mipsel-linux-muslhf";;
+	ppc) _triplet="powerpc-linux-gnu";;
 esac
 case "$XBPS_TARGET_MACHINE" in
 	*-musl)	 depends+=" musl-devel";;
@@ -122,6 +123,7 @@ do_configure() {
 		armv5*) _args+=" --with-arch=armv5te --with-float=soft";;
 		armv6l*) _args+=" --with-arch=armv6 --with-fpu=vfp --with-float=hard";;
 		armv7l*) _args+=" --with-arch=armv7-a --with-fpu=vfpv3 --with-float=hard";;
+		ppc) _args+=" --with-cpu=powerpc --target=powerpc-linux-gnu";;
 		aarch64*) # use lib not lib64 by default
 			_args+=" --with-arch=armv8-a"
 			sed -i '/m64=/s/lib64/lib/' gcc/config/aarch64/t-aarch64-linux
@@ -175,6 +177,10 @@ do_configure() {
 			fi
 			;;
 	esac
+	case "$XBPS_TARGET_MACHINE" in
+		ppc*) _args+=" --disable-vtable-verify" ;;
+		*) _args+=" --enable-vtable-verify" ;;
+	esac
 
 	export CFLAGS="${CFLAGS/-D_FORTIFY_SOURCE=2/}"
 	export CXXFLAGS="${CXXFLAGS/-D_FORTIFY_SOURCE=2/}"
@@ -194,7 +200,6 @@ do_configure() {
 	_args+=" --with-system-zlib"
 	_args+=" --enable-shared"
 	_args+=" --enable-lto"
-	_args+=" --enable-vtable-verify"
 	_args+=" --enable-linker-build-id"
 	_args+=" --enable-serial-configure"
 	_args+=" --disable-werror"
