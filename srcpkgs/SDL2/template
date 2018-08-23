@@ -29,6 +29,9 @@ case "$XBPS_TARGET_MACHINE" in
 		# Enable OpenGL/ES on rpi platforms
 		build_options_default="gles"
 		;;
+	ppc*)
+		build_options_default="opengl pulseaudio x11"
+		;;
 esac
 
 if [ "$build_option_gles" ]; then
