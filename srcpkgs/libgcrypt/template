@@ -3,7 +3,6 @@ pkgname=libgcrypt
 version=1.8.4
 revision=1
 build_style=gnu-configure
-configure_args="--enable-static --without-capabilities"
 makedepends="libgpg-error-devel"
 short_desc="GNU cryptographic library"
 maintainer="Juan RP <xtraeme@voidlinux.org>"
