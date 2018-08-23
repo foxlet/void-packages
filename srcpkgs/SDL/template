@@ -29,6 +29,9 @@ i686*|x86_64*|ppc*)
 	# Enable OpenGL and pulseaudio on x86 and ppc.
 	build_options_default+=" opengl pulseaudio"
 	;;
+ppc*)
+	build_options_default+=" opengl pulseaudio"
+	;;
 esac
 
 if [ "$build_option_opengl" ]; then
