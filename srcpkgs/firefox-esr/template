@@ -64,7 +64,7 @@ do_build() {
 		echo "ac_add_options --disable-jemalloc" >>.mozconfig
 		echo "ac_add_options --enable-gold=no" >>.mozconfig
 		;;
-	arm*|aarch64*)
+	arm*|aarch64*|ppc*)
 		echo "ac_add_options --enable-gold=no" >>.mozconfig
 		;;
 	esac
