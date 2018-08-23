@@ -8,7 +8,7 @@ short_desc="Abstraction library for audio visualisation plugins"
 maintainer="Juan RP <xtraeme@voidlinux.eu>"
 homepage="http://sourceforge.net/projects/libvisual/"
 license="LGPL-2.1"
-distfiles="${SOURCEFORGE_SITE}/$pkgname/$pkgname-$version.tar.gz"
+distfiles="http://sourceforge.mirrorservice.org/l/li/$pkgname/$pkgname/$pkgname-$version/$pkgname-$version.tar.gz"
 checksum=0b4dfdb87125e129567752089e3c8b54cefed601eef169d2533d8659da8dc1d7
 
 pre_configure() {
