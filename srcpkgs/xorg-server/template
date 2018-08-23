@@ -40,6 +40,12 @@ i686*|x86_64*|aarch64*)
 	replaces+=" glamor-egl>=0"
 	subpackages+=" xorg-server-xwayland"
 	;;
+ppc*)
+	# Wayland may not work on ppc?
+	configure_args+=" --enable-glamor --enable-dri2 --enable-dri3 --enable-glx --disable-xwayland"
+	makedepends+=" MesaLib-devel"
+	replaces+=" glamor-egl>=0"
+	;;
 *)
 	# Enable dri2 on !x86 via libdri.
 	configure_args+=" --disable-glx --disable-dri --enable-dri2 --enable-dri3 --disable-xwayland"
