@@ -31,6 +31,9 @@ i686*|x86_64*)
 	# Enable OpenGL and pulseaudio on x86.
 	build_options_default+=" opengl pulseaudio"
 	;;
+ppc*)
+	build_options_default+=" opengl pulseaudio"
+	;;
 esac
 
 if [ "$build_option_opengl" ]; then
