@@ -17,7 +17,7 @@ noverifyrdeps=yes
 noshlibprovides=yes
 preserve=yes
 
-only_for_archs="i686 i686-musl x86_64 x86_64-musl armv5tel armv5tel-musl armv6l armv6l-musl armv7l armv7l-musl aarch64 aarch64-musl"
+only_for_archs="i686 i686-musl x86_64 x86_64-musl armv5tel armv5tel-musl armv6l armv6l-musl armv7l armv7l-musl aarch64 aarch64-musl ppc"
 hostmakedepends="bc elfutils-devel flex gmp-devel kmod libmpc-devel libressl-devel perl uboot-mkimage"
 
 _kernver="${version}_${revision}"
@@ -50,6 +50,7 @@ do_configure() {
 		x86_64*) arch=x86_64;;
 		arm*) arch=arm;;
 		aarch64*) arch=arm64;;
+		ppc*) arch=powerpc;;
 	esac
 
 	if [ "$CROSS_BUILD" ]; then
@@ -84,6 +85,7 @@ do_build() {
 		x86_64*) _args="bzImage modules"; arch=x86_64;;
 		arm*) _args="zImage modules dtbs"; arch=arm;;
 		aarch64*) _args="Image modules dtbs"; arch=arm64;;
+		ppc*) _args="zImage modules"; arch=powerpc;;
 	esac
 	if [ "$CROSS_BUILD" ]; then
 		_cross="CROSS_COMPILE=${XBPS_CROSS_TRIPLET}-"
@@ -103,6 +105,7 @@ do_install() {
 		x86_64*) arch=x86; subarch=x86_64;;
 		arm*) arch=arm;;
 		aarch64*) arch=arm64;;
+		ppc*) arch=powerpc;;
 	esac
 
 	# Run depmod after compressing modules.
@@ -129,6 +132,9 @@ do_install() {
 			vinstall arch/arm64/boot/Image 644 boot vmlinux-${_kernver}
 			vmkdir boot/dtbs
 			cp arch/arm64/boot/dts/*/*.dtb ${DESTDIR}/boot/dtbs
+			;;
+		powerpc)
+			vinstall arch/powerpc/boot/zImage 644 boot vmlinux-${_kernver}
 			;;
 	esac
 
@@ -251,6 +257,7 @@ do_install() {
 	case "$arch" in
 		i386|x86_64) _args="arm*";;
 		arm|arm64) _args="x86*";;
+		powerpc) _args="x86*";;
 	esac
 	for arch in alpha avr32 blackfin cris frv h8300 \
 		ia64 m* p* s* um v850 xtensa ${_args}; do
