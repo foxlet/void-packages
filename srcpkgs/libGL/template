@@ -40,13 +40,12 @@ i686*|x86_64*)
 	subpackages+=" mesa-vmwgfx-dri mesa-opencl"
 	;;
 ppc*)
-	# No OpenCL and a bunch of other things but otherwise complete
+	# Enable all ppc drivers.
 	configure_args+=" -Dgallium-drivers=r300,r600,radeonsi,swrast,nouveau,virgl"
-	configure_args+=" -Ddri-drivers=r100,r200,nouveau"
-	configure_args+=" -Dgallium-xa=true -Ddri3=true"
+	configure_args+=" -Ddri-drivers=r100,r200,radeon,nouveau"
 	configure_args+=" -Dvulkan-drivers=amd"
-	hostmakedepends+=" clang"
-	subpackages+=" libxatracker mesa-ati-dri mesa-nouveau-dri"
+	configure_args+=" -Ddri3=true"
+	subpackages+=" mesa-ati-dri mesa-nouveau-dri"
 	;;
 aarch64*)
 	configure_args+=" -Dgallium-drivers=nouveau,tegra,swrast,vc4"
@@ -162,7 +161,7 @@ libxatracker_package() {
 mesa-ati-dri_package() {
 	short_desc="Mesa DRI drivers for ATI GPUs"
 	pkg_install() {
-		vmove "usr/lib/libXvMCr[36]00.so.*"
+		vmove "usr/lib/libXvMCr[36]00.so*"
 		vmove "usr/lib/vdpau/libvdpau_r[36]00.so*"
 		vmove "usr/lib/vdpau/libvdpau_radeon*.so*"
 		vmove "usr/lib/xorg/modules/drivers/radeon*"
@@ -172,7 +171,7 @@ mesa-ati-dri_package() {
 		vmove "usr/lib/libvulkan_radeon.so"
 		case "$XBPS_TARGET_MACHINE" in
 			ppc*) ;;
-			*)
+			*) 
 				vmove "usr/lib/gallium-pipe/pipe_r[36]00.so"
 				vmove usr/lib/gallium-pipe/pipe_radeonsi.so
 			;;
