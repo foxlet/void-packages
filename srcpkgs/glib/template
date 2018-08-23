@@ -19,6 +19,8 @@ if [ "$CROSS_BUILD" ]; then
 	case "$XBPS_TARGET_MACHINE" in
 		mips*|ppc|ppc-musl)	# It seems mips/ppc autoconf cache is not read?
 			configure_args+=" glib_cv_stack_grows=no glib_cv_rtldglobal_broken=no glib_cv_uscore=no" ;;
+		ppc*)
+			configure_args+=" glib_cv_stack_grows=no glib_cv_uscore=no" ;;
 	esac
 fi
 
