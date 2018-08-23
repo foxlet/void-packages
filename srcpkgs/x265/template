@@ -16,6 +16,7 @@ checksum=6e59f9afc0c2b87a46f98e33b5159d56ffb3558a49d8e3d79cb7fdc6b7aaa863
 
 case "$XBPS_TARGET_MACHINE" in
 	mips*) configure_args+=" -DCMAKE_SYSTEM_PROCESSOR=mips32r2" ;;
+	ppc*) configure_args+=" -DCMAKE_SYSTEM_PROCESSOR=powerpc" ;;
 esac
 
 pre_configure() {
