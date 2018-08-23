@@ -30,6 +30,9 @@ case "$XBPS_TARGET_MACHINE" in
 		# Enable OpenGL/ES on rpi platforms
 		build_options_default="gles sndio"
 		;;
+	ppc*)
+		build_options_default="opengl pulseaudio x11"
+		;;
 esac
 
 # SDL_cpuinfo includes altivec.h, which breaks C++ programs with vector keyword
