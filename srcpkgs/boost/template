@@ -20,6 +20,7 @@ case "$XBPS_TARGET_MACHINE" in
 	arm*)     _arch=arm;      _toolset="gcc-arm";     _abi=aapcs ;;
 	aarch64*) _arch=arm;      _toolset="gcc-aarch64"; _abi=aapcs ;;
 	mips*)    _arch=mips32r2; _toolset="gcc-mips";    _abi=o32   ;;
+	ppc*)     _arch=power;    _toolset="gcc-power";   _abi=sysv  ;;
 esac
 
 do_build() {
