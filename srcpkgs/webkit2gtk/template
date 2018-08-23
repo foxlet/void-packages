@@ -31,6 +31,10 @@ case "$XBPS_TARGET_MACHINE" in
 armv[56]*|mips*|ppc|ppc-musl) configure_args+=" -DENABLE_JIT=0"
 	makedepends+=" libatomic-devel"
 	;;
+ppc*)
+	configure_args+=" -DENABLE_JIT=0 -DUSE_LD_GOLD=0"
+	makedepends+=" libatomic-devel"
+	;;
 aarch64*) configure_args+=" -DUSE_LD_GOLD=0";;
 esac
 
