@@ -59,6 +59,7 @@ shlib_provides="
 	libstdc++.so.6
 	libgfortran.so.4
 	libgomp.so.1
+	ld.so.1
 	ld-linux.so.2
 	ld-linux.so.3
 	ld-linux-x86_64.so.2
