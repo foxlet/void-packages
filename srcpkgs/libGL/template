@@ -36,6 +36,13 @@ i686*|x86_64*)
 	subpackages+=" libxatracker mesa-ati-dri mesa-intel-dri mesa-nouveau-dri"
 	subpackages+=" mesa-vmwgfx-dri mesa-opencl"
 	;;
+ppc*)
+	# Enable all ppc drivers.
+	configure_args+=" --with-gallium-drivers=r300,r600,swrast,nouveau,virgl"
+	configure_args+=" --with-dri-drivers=r200,radeon,nouveau,swrast"
+	configure_args+=" --enable-dri3"
+	subpackages+=" mesa-ati-dri mesa-nouveau-dri"
+	;;
 aarch64*)
 	configure_args+=" --with-gallium-drivers=nouveau,tegra,swrast,vc4"
 	configure_args+=" --with-dri-drivers=swrast"
@@ -170,15 +177,19 @@ mesa-ati-dri_package() {
 	short_desc="Mesa DRI drivers for ATI GPUs"
 	pkg_install() {
 		vmove "usr/lib/libXvMCr[36]00.so*"
-		vmove "usr/lib/vdpau/libvdpau_r[36]00.so*"
-		vmove "usr/lib/vdpau/libvdpau_radeon*.so*"
+		case "$XBPS_TARGET_MACHINE" in
+		i686*|x86_64*)
+			vmove "usr/lib/vdpau/libvdpau_r[36]00.so*"
+			vmove "usr/lib/vdpau/libvdpau_radeon*.so*"
+			vmove "usr/lib/gallium-pipe/pipe_r[36]00.so"
+			vmove usr/lib/gallium-pipe/pipe_radeonsi.so
+			vmove "usr/share/vulkan/icd.d/radeon_icd*.json"
+			vmove "usr/lib/libvulkan_radeon.so"
+			;;
+		esac
 		vmove "usr/lib/xorg/modules/drivers/radeon*"
 		vmove "usr/lib/xorg/modules/drivers/r[236]00*"
-		vmove "usr/lib/gallium-pipe/pipe_r[36]00.so"
-		vmove usr/lib/gallium-pipe/pipe_radeonsi.so
 		vmove usr/lib/dri/r*
-		vmove "usr/share/vulkan/icd.d/radeon_icd*.json"
-		vmove "usr/lib/libvulkan_radeon.so"
 	}
 }
 
@@ -200,6 +211,7 @@ mesa-nouveau-dri_package() {
 		vmove "usr/lib/dri/nouveau*"
 		case "$XBPS_TARGET_MACHINE" in
 			aarch64*) ;;
+			ppc* ) ;;
 			*) vmove usr/lib/gallium-pipe/pipe_nouveau.so ;;
 		esac
 	}
