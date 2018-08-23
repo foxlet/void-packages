@@ -18,6 +18,8 @@ if [ "$CROSS_BUILD" ]; then
 	case "$XBPS_TARGET_MACHINE" in
 		mips*)	# It seems common/environment/configure/autoconf_cache/mips-linux is not read?
 			configure_args+=" glib_cv_stack_grows=no glib_cv_rtldglobal_broken=no glib_cv_uscore=no" ;;
+		ppc*)
+			configure_args+=" glib_cv_stack_grows=no glib_cv_uscore=no" ;;
 	esac
 fi
 
